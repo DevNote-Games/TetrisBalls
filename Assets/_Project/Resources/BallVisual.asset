@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51153a20edd320f4ba2cfa09b128d439, type: 3}
+  m_Name: BallVisual
+  m_EditorClassIdentifier: 
+  _ballMaterials:
+  - ballType: 0
+    material: {fileID: 2100000, guid: 1c013962ece80c547ad8358f85e82402, type: 2}
+  - ballType: 1
+    material: {fileID: 2100000, guid: a1cb463e1b44c044f8a40103b40fc653, type: 2}
+  - ballType: 2
+    material: {fileID: 2100000, guid: 80100271dc57e1b449c2feb5f1268c45, type: 2}
+  - ballType: 3
+    material: {fileID: 2100000, guid: 37f85ab0eb1a59a4f888506381c3ab07, type: 2}
