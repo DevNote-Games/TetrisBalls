@@ -4,7 +4,7 @@ using Zenject;
 
 public class Test : MonoBehaviour
 {
-    [Inject] private BallSpawnerController _ballSpawnerController;
+    [Inject] private BallsController _ballsController;
 
 
     private void Update()
@@ -12,7 +12,7 @@ public class Test : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.T))
         {
-            _ballSpawnerController.SpawnBalls();
+            _ballsController.SpawnBalls();
 
         }
 

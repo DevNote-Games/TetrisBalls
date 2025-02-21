@@ -10,7 +10,7 @@ public static class Configs
 
     public static BallSpawnConfig BallSpawn => Resources.Load<BallSpawnConfig>("BallSpawn");
 
-
+    public static GameRulesConfig GameRules => Resources.Load<GameRulesConfig>("GameRules");
 
 }
 

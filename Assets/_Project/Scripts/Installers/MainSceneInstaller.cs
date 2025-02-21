@@ -14,7 +14,7 @@ public class MainSceneInstaller : MonoInstaller
         new SceneContainer(Container);
         var gameTime = new GameTime();
 
-        Container.Bind<BallSpawnerController>().FromInstance(new BallSpawnerController(_ballGroupSpawnPositions)).AsSingle();
+        Container.Bind<BallsController>().FromInstance(new BallsController(_ballGroupSpawnPositions)).AsSingle();
 
 
     }

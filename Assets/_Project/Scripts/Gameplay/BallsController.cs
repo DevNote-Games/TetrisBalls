@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using VG2;
 
-public class BallSpawnerController
+public class BallsController
 {
     private List<Transform> _spawnPositions;
+    private List<Ball> _handledShapeBalls = new List<Ball>();
 
 
-
-
-
-    public BallSpawnerController(List<Transform> spawnPositions)
+    public BallsController(List<Transform> spawnPositions)
     {
         _spawnPositions = spawnPositions;
     }
@@ -23,7 +22,7 @@ public class BallSpawnerController
             var ballGroups = Configs.BallSpawn.BallGroupPrefabs;
             var randomBallGroupPrefab = ballGroups[Random.Range(0, ballGroups.Count)];
 
-            var groupInstance = Object.Instantiate(randomBallGroupPrefab, spawnPosition.position, Quaternion.identity);
+            var groupInstance = SceneContainer.InstantiatePrefabFromComponent(randomBallGroupPrefab, spawnPosition.position, Quaternion.identity);
 
             var ballTypes = GetRandomBallTypesInsideGroup();
             foreach (var ball in groupInstance.Balls)
@@ -55,6 +54,37 @@ public class BallSpawnerController
         }
 
         return result;
+    }
+
+
+
+    public void HandleShape(Ball ball)
+    {
+        _handledShapeBalls.Clear();
+        HandleShapeRecursive(ball);
+
+        if (_handledShapeBalls.Count >= Configs.GameRules.MinBallsRequireForExplosion)
+        {
+            foreach (var handledBall in _handledShapeBalls)
+                handledBall.Explode();
+
+        }
+
+
+    }
+
+    private void HandleShapeRecursive(Ball ball)
+    {
+        for (int i = 0; i < ball.ConnectedBalls.Count; i++)
+        {
+            var connectedBall = ball.ConnectedBalls[i];
+
+            if (connectedBall.BallType == ball.BallType && _handledShapeBalls.Contains(connectedBall) == false)
+            {
+                _handledShapeBalls.Add(ball.ConnectedBalls[i]);
+                HandleShapeRecursive(connectedBall);
+            }
+        }
     }
 
 
