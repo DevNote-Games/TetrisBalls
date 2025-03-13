@@ -10,7 +10,7 @@ public class SkipAds_Button : ButtonHandler
         click--;
         if (click == 0)
         {
-            GameState.adsEnabled.Value = false;
+            GameState.AdsEnabled.Value = false;
             button.image.color = Color.green;
         }
 

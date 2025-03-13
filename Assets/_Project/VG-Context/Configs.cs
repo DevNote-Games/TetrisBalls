@@ -12,6 +12,10 @@ public static class Configs
 
     public static GameRulesConfig GameRules => Resources.Load<GameRulesConfig>("GameRules");
 
+    public static LevelsConfig Levels => Resources.Load<LevelsConfig>("Levels");
+
+
+
 }
 
 

@@ -1,12 +1,12 @@
-using System;
 using R3;
 
 namespace VG2
 {
     public static class GameState
     {
-        public static ReactiveProperty<bool> adsEnabled;
-        public static DateTime lastOnlineTime;
+        public static ReactiveProperty<bool> AdsEnabled { get; set; }
+        public static int Level { get; set; }
+        public static ReactiveProperty<int> Coins { get; set; }
 
     }
 }

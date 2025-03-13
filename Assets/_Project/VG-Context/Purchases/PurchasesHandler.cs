@@ -8,7 +8,7 @@ namespace VG2
             switch (productKey)
             {
                 case ProductType.NoAds:
-                    GameState.adsEnabled.Value = false;
+                    GameState.AdsEnabled.Value = false;
                     break;
 
                 default: throw new System.Exception("Wrong product: " + productKey.ToString());

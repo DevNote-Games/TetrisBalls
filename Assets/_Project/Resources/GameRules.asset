@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5225bdedce4b04382961c843dfb62d, type: 3}
   m_Name: GameRules
   m_EditorClassIdentifier: 
-  MinBallsRequireForExplosion: 5
+  <TimeToLimitLose>k__BackingField: 3
+  <MinBallsChainRequire>k__BackingField: 5
+  <LevelCoinsReward>k__BackingField: 300
+  _baseScoreForOneBallOfChain: 10
+  _scoreMultipliersForChain:
+  - balls: 7
+    multiplier: 1.5
+  - balls: 10
+    multiplier: 2
+  - balls: 15
+    multiplier: 3
+  - balls: 20
+    multiplier: 4

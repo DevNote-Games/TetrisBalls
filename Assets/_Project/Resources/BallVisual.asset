@@ -12,6 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51153a20edd320f4ba2cfa09b128d439, type: 3}
   m_Name: BallVisual
   m_EditorClassIdentifier: 
+  <ScorePartPrefab>k__BackingField: {fileID: 2132757111602980627, guid: eac2070cb1bcfe0448c03dce48e4f8bc, type: 3}
+  <SplashDecalPrefab>k__BackingField: {fileID: 4658636340446096775, guid: bd32778a99d78be4c88ac422987b97fe, type: 3}
+  <BlastParticlePrefab>k__BackingField: {fileID: 519686979895555208, guid: 472915300dc3f2f48910d2e71559a582, type: 3}
+  <SmallBallsParticlePrefab>k__BackingField: {fileID: 8015099938676610223, guid: 2fe385c5f6c674f449c11ce33206a35d, type: 3}
+  _splashTextures:
+  - {fileID: 2800000, guid: 0ea79c699bbcbab45a12725e87b93e96, type: 3}
+  - {fileID: 2800000, guid: 012fe65348ea86c44b71a6237603ecf6, type: 3}
+  - {fileID: 2800000, guid: cd99a1b5a2a329c4ab21705d00f8a078, type: 3}
+  - {fileID: 2800000, guid: bc5a9658aff345442a2a50d36e25a7e9, type: 3}
   _ballMaterials:
   - ballType: 0
     material: {fileID: 2100000, guid: 1c013962ece80c547ad8358f85e82402, type: 2}

@@ -16,7 +16,7 @@ namespace VG2
             set
             {
                 PlayerPrefs.SetInt(nameof(SkipAds), Convert.ToInt32(value));
-                GameState.adsEnabled.Value = !value;
+                GameState.AdsEnabled.Value = !value;
                 Saves.Save();
             }
         }
@@ -98,7 +98,7 @@ namespace VG2
 
                 _instance.Log("Request interstitial ad. Ad key: " + key_ad);
 
-                if (GameState.adsEnabled.Value == false)
+                if (GameState.AdsEnabled.Value == false)
                 {
                     _instance.Log("No Ads purchased. Interstitial rejected. Ad key: " + key_ad);
                     onShown?.Invoke(Result.NoAds);

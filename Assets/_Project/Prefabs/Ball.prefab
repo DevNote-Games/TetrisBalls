@@ -70,10 +70,10 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -90,6 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1696620516430027062}
   - component: {fileID: 2186117289985153794}
+  - component: {fileID: 2896727017507080977}
   - component: {fileID: 519669250562418429}
   m_Layer: 0
   m_Name: Ball
@@ -131,6 +132,20 @@ MonoBehaviour:
   _rigidbody: {fileID: 519669250562418429}
   _collider: {fileID: 8307479266213710706}
   _ballTrigger: {fileID: 513554321671728061}
+--- !u!114 &2896727017507080977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5353665749041674440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de8f4f03e94139c449fcda1d9d940d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ball: {fileID: 2186117289985153794}
+  _ballTrigger: {fileID: 513554321671728061}
 --- !u!50 &519669250562418429
 Rigidbody2D:
   serializedVersion: 4
@@ -170,7 +185,7 @@ GameObject:
   - component: {fileID: 819257945254431289}
   - component: {fileID: 7000986888871700399}
   - component: {fileID: 8307479266213710706}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +232,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1c013962ece80c547ad8358f85e82402, type: 2}
