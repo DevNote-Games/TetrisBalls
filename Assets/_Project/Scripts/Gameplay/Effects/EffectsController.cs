@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EffectsController : IDisposable
 {
-    private BallsController _ballsController;
+    private BallSpawnerController _ballSpawnerController;
     private LevelController _levelController;
     private int _lastDecalRenderPriority = 0;
 
@@ -15,16 +15,16 @@ public class EffectsController : IDisposable
 
 
 
-    public EffectsController(BallsController ballsController, LevelController levelController)
+    public EffectsController(BallSpawnerController ballsController, LevelController levelController)
     {
-        _ballsController = ballsController;
-        _ballsController.onBallChainHandled += OnBallChainHandled;
+        _ballSpawnerController = ballsController;
+        _ballSpawnerController.onBallChainExploded += OnBallChainHandled;
         _levelController = levelController;
     }
 
     public void Dispose()
     {
-        _ballsController.onBallChainHandled -= OnBallChainHandled;
+        _ballSpawnerController.onBallChainExploded -= OnBallChainHandled;
     }
 
 

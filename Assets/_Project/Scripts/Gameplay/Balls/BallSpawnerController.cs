@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using VG2;
 
-public class BallsController
+public class BallSpawnerController
 {
     private struct BallChain
     {
@@ -12,18 +12,17 @@ public class BallsController
     }
 
 
-
-
     public delegate void OnBallChainHandled(List<Ball> balls);
-    public event OnBallChainHandled onBallChainHandled;
-
+    public event OnBallChainHandled onBallChainExploded;
 
     public List<Ball> AllBalls { get; private set; } = new();
 
     private List<BallGroup> _spawnedBallGroups = new();
     private List<Vector2> _spawnPositions;
     private int _ballGroupsLeft;
-    private List<Ball> _handledChainBalls = new List<Ball>();
+
+    private List<BallChain> _currentExplodingBallChains = new();
+    private List<Ball> _handledChainBalls = new();
 
 
     private const float BALL_EXPLOSION_DURATION = 0.5f;
@@ -99,53 +98,6 @@ public class BallsController
 
         return result;
     }
-
-
-
-    public void HandleChain(Ball ball)
-    {
-        _handledChainBalls.Clear();
-        HandleChainRecursive(ball);
-
-        int ballsAmount = _handledChainBalls.Count;
-
-        if (ballsAmount >= Configs.GameRules.MinBallsChainRequire)
-        {
-            foreach (var handledBall in _handledChainBalls)
-                handledBall.Explode();
-
-            onBallChainHandled?.Invoke(_handledChainBalls);
-        }
-
-    }
-
-    private Vector2 GetAveragePoint(List<Vector2> points)
-    {
-        Vector2 sum = Vector2.zero;
-        foreach (Vector2 point in points)
-        {
-            sum += point;
-        }
-        return sum / points.Count;
-    }
-
-
-    private void HandleChainRecursive(Ball ball)
-    {
-        for (int i = 0; i < ball.ConnectedBalls.Count; i++)
-        {
-            var connectedBall = ball.ConnectedBalls[i];
-
-            if (connectedBall.BallType == ball.BallType && _handledChainBalls.Contains(connectedBall) == false)
-            {
-                _handledChainBalls.Add(ball.ConnectedBalls[i]);
-                HandleChainRecursive(connectedBall);
-            }
-        }
-    }
-
-
-
 
 
 

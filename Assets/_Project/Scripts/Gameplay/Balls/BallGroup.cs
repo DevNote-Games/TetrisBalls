@@ -8,7 +8,7 @@ public class BallGroup : MonoBehaviour
     [SerializeField] private float _pushForce;
     [SerializeField] private List<Ball> _balls; public List<Ball> Balls => _balls;
 
-    [Inject] private BallsController _ballsController;
+    [Inject] private BallSpawnerController _ballSpawnerController;
 
     private void OnEnable()
     {
@@ -43,7 +43,7 @@ public class BallGroup : MonoBehaviour
             ball.Push(pushDirection, _pushForce);
         }
 
-        _ballsController.OnBallGroupReleased();
+        _ballSpawnerController.OnBallGroupReleased();
         Destroy(gameObject);
     }
 

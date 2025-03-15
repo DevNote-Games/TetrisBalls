@@ -13,7 +13,7 @@ public class LevelController : IInitializable, ITickable
     public int CurrentScore { get; private set; } = 0;
     public int RequiredScore { get; private set; } = 1;
 
-    private BallsController _ballsController;
+    private BallSpawnerController _ballSpawnerController;
     private UIController _uiController;
 
     private Level _currentLevelInstance;
@@ -23,9 +23,9 @@ public class LevelController : IInitializable, ITickable
 
 
 
-    public LevelController(BallsController ballsController, UIController uiController)
+    public LevelController(BallSpawnerController ballSpawnerController, UIController uiController)
     {
-        _ballsController = ballsController;
+        _ballSpawnerController = ballSpawnerController;
         _uiController = uiController;
     }
 
@@ -50,7 +50,7 @@ public class LevelController : IInitializable, ITickable
 
     public void StartLevel(int levelNumber)
     {
-        _ballsController.DestroyAllBalls();
+        _ballSpawnerController.DestroyAllBalls();
 
         CurrentScore = 0;
         RequiredScore = Configs.Levels.GetLevelRequiredScore(levelNumber);
@@ -61,8 +61,8 @@ public class LevelController : IInitializable, ITickable
         _currentLevelInstance = SceneContainer.InstantiatePrefabFromComponent(Configs.Levels.GetLevelPrefab(levelNumber));
 
         CameraContainer.AdjustCamerasToRect(_currentLevelInstance.CameraArea);
-        _ballsController.SetBallsSpawnPositions(_currentLevelInstance.GetBallGroupSpawnPositions());
-        _ballsController.RespawnBalls();
+        _ballSpawnerController.SetBallsSpawnPositions(_currentLevelInstance.GetBallGroupSpawnPositions());
+        _ballSpawnerController.RespawnBalls();
 
         _levelFinished = false;
     }

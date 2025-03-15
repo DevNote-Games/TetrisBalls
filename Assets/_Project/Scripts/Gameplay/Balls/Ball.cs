@@ -13,30 +13,23 @@ public class Ball : MonoBehaviour
     [SerializeField] private Collider2D _collider;
     [SerializeField] private BallTrigger _ballTrigger;
 
-    private BallsController _ballsController;
+    private BallChainsController _ballChainsController;
 
 
     public Color Color { get; private set; }
-
-    private bool _exploded = false;
 
 
     public int ScoreForBall { get; private set; } public void SetScoreForBall(int score) => ScoreForBall = score;
     public Material Material => _meshRenderer.material;
     public Vector2 Velocity => _rigidbody.velocity;
 
-
-
-    public List<Ball> ConnectedBalls { get; private set; } = new();
-
     public BallType BallType { get; private set; }
 
 
 
-    [Inject] private void Construct(BallsController ballsController)
+    [Inject] private void Construct(BallChainsController ballChainsController)
     {
-        _ballsController = ballsController;
-        _ballsController.AllBalls.Add(this);
+        _ballChainsController = ballChainsController;
     }
 
 
@@ -44,30 +37,22 @@ public class Ball : MonoBehaviour
     {
         _ballTrigger.onBallEnter += OnBallEnter;
         _ballTrigger.onBallExit += OnBallExit;
-
-        _ballsController?.AllBalls.Add(this);
     }
 
     private void OnDisable()
     {
         _ballTrigger.onBallEnter -= OnBallEnter;
         _ballTrigger.onBallExit -= OnBallExit;
-        _ballsController.AllBalls.Remove(this);
     }
 
     private void OnBallEnter(Ball ball)
     {
-        if (!ball._exploded)
-        {
-            ConnectedBalls.Add(ball);
-            _ballsController.HandleChain(ball);
-        }
-        
+        _ballChainsController.HandleBallEnter(ball, this);
     }
 
     private void OnBallExit(Ball ball)
     {
-        ConnectedBalls.Remove(ball);
+        _ballChainsController.HandleBallsExit(this, ball);
     }
 
 
@@ -90,23 +75,14 @@ public class Ball : MonoBehaviour
 
 
 
-    public void Explode()
+    public void RunExplode(float explosionDuration)
     {
-        if (_exploded) return;
-
-        foreach (var connectedBall in ConnectedBalls)
-            connectedBall.ConnectedBalls.Remove(this);
-
-        //ConnectedBalls.Clear();
-        transform.DOScale(1.3f, 0.5f).onComplete += () =>
+        transform.DOKill();
+        transform.DOScale(1.3f, explosionDuration).onComplete += () =>
         {
-            
-
             onExploded?.Invoke(this);
             Destroy(gameObject);
         };
-
-        _exploded = true;
     }
 
 

@@ -24,13 +24,14 @@ public class MainSceneInstaller : MonoInstaller
         var gameTime = new GameTime();
 
         var ui = new UIController(_victoryScreen, _loseScreen);
-        var balls = new BallsController();
-        var level = new LevelController(balls, ui);
-        var effects = new EffectsController(balls, level);
+        var ballSpawner = new BallSpawnerController();
+        var level = new LevelController(ballSpawner, ui);
+        var effects = new EffectsController(ballSpawner, level);
+        var ballChains = new BallChainsController(level);
 
 
         Container.BindInterfacesAndSelfTo<LevelController>().FromInstance(level).AsSingle();
-        Container.BindInterfacesAndSelfTo<BallsController>().FromInstance(balls).AsSingle();
+        Container.BindInterfacesAndSelfTo<BallSpawnerController>().FromInstance(ballSpawner).AsSingle();
         Container.BindInterfacesAndSelfTo<EffectsController>().FromInstance(effects).AsSingle();
         Container.BindInterfacesAndSelfTo<UIController>().FromInstance(ui).AsSingle();
     }
