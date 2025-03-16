@@ -18,7 +18,8 @@ public class Ball : MonoBehaviour
 
     public Color Color { get; private set; }
 
-    private bool _exploded = false;
+
+    public BallState State { get; set; } = BallState.Active;
 
 
     public int ScoreForBall { get; private set; } public void SetScoreForBall(int score) => ScoreForBall = score;
@@ -57,18 +58,19 @@ public class Ball : MonoBehaviour
 
     private void OnBallEnter(Ball ball)
     {
-        if (!ball._exploded)
-        {
-            ConnectedBalls.Add(ball);
+        ConnectedBalls.Add(ball);
+
+        if (ball.State != BallState.Exploding && State != BallState.Exploding)
             _ballsController.HandleChain(ball);
-        }
-        
     }
 
     private void OnBallExit(Ball ball)
     {
         ConnectedBalls.Remove(ball);
     }
+
+    public bool IsMatched(Ball ball) => BallType == ball.BallType;
+
 
 
     public void SetType(BallType ballType)
@@ -90,25 +92,45 @@ public class Ball : MonoBehaviour
 
 
 
+    public void AddConnectedUniqueChainBallsToExplodeList(List<Ball> balls)
+    {
+        foreach (Ball ball in ConnectedBalls)
+            if (!balls.Contains(ball) && IsMatched(ball))
+            {
+                balls.Add(ball);
+                ball.AddConnectedUniqueChainBallsToExplodeList(balls);
+            }
+    }
+
     public void Explode()
     {
-        if (_exploded) return;
+        if (State == BallState.Exploding) return;
+
+        transform.DOScale(1.3f, 0.5f).onComplete += () =>
+        {
+            onExploded?.Invoke(this);
+
+            foreach (var connectedBall in ConnectedBalls)
+                connectedBall.ConnectedBalls.Remove(this);
+
+            Destroy(gameObject);
+        };
+
+        State = BallState.Exploding;
+    }
+
+    public void FastExplode()
+    {
+        if (State == BallState.Exploding) return;
 
         foreach (var connectedBall in ConnectedBalls)
             connectedBall.ConnectedBalls.Remove(this);
 
-        //ConnectedBalls.Clear();
-        transform.DOScale(1.3f, 0.5f).onComplete += () =>
-        {
-            
+        onExploded?.Invoke(this);
+        Destroy(gameObject);
 
-            onExploded?.Invoke(this);
-            Destroy(gameObject);
-        };
-
-        _exploded = true;
+        State = BallState.Exploding;
     }
-
 
 
 }

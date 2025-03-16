@@ -13,7 +13,10 @@ public class BallGroup : MonoBehaviour
     private void OnEnable()
     {
         foreach (var ball in _balls)
+        {
+            ball.State = BallState.Inventory;
             ball.TogglePhysics(false);
+        }
 
         _interactionHandler.onDrag += OnDrag;
         _interactionHandler.onEndDrag += OnEndDrag;
@@ -37,6 +40,7 @@ public class BallGroup : MonoBehaviour
         foreach (var ball in _balls)
         {
             ball.TogglePhysics(true);
+            ball.State = BallState.Active;
             ball.transform.SetParent(null);
 
             Vector2 pushDirection = ball.transform.position - transform.position;

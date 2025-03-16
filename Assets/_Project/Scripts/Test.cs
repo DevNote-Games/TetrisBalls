@@ -1,11 +1,10 @@
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using Zenject;
+using VG2;
 
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] private Vector3 _angle;
+    [SerializeField] private GameObject _bombPrefab;
 
 
 
@@ -19,7 +18,7 @@ public class Test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            
+            SceneContainer.InstantiatePrefab(_bombPrefab).transform.position = Vector3.zero;
         }
 
 

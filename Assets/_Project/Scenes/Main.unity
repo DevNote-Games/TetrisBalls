@@ -1493,7 +1493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a879fd0d83f0f49419ee647742c0309e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _angle: {x: 0, y: 0, z: 0}
+  _bombPrefab: {fileID: 5353665749041674440, guid: f35e869d2bd6bff43ac47252d06baf88, type: 3}
 --- !u!1 &1504308371
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,38 +18,34 @@ public class EffectsController : IDisposable
     public EffectsController(BallsController ballsController, LevelController levelController)
     {
         _ballsController = ballsController;
-        _ballsController.onBallChainHandled += OnBallChainHandled;
+        _ballsController.onBallChainExploded += OnBallChainExploded;
         _levelController = levelController;
     }
 
     public void Dispose()
     {
-        _ballsController.onBallChainHandled -= OnBallChainHandled;
+        _ballsController.onBallChainExploded -= OnBallChainExploded;
     }
 
 
-    private void OnBallChainHandled(List<Ball> balls)
+    private void OnBallChainExploded(List<Ball> balls)
     {
+        Debug.Log(balls.Count);
+
         int score = Configs.GameRules.GetScoreForChainExplosion(balls.Count);
-        int scoreForBall = score / balls.Count;
-        int scoreForLastBall = scoreForBall + score % balls.Count;
+        ScoreCalculator.DistributeScore(score, balls);
 
         Vector2 averagePosition = Vector2.zero;
         for (int i = 0; i < balls.Count; i++)
         {
             averagePosition += (Vector2)balls[i].transform.position;
             balls[i].onExploded += OnBallExploded;
-
-            if (i != balls.Count - 1) balls[i].SetScoreForBall(scoreForBall);
-            else balls[i].SetScoreForBall(scoreForLastBall);
-
         }
             
-
         averagePosition /= balls.Count;
 
-        var scorePart = UnityEngine.Object.Instantiate(Configs.BallVisual.ScorePartPrefab, UIContainer.Canvas);
-        (scorePart.transform as RectTransform).position = CameraContainer.PerspectiveCamera.WorldToScreenPoint(averagePosition);
+        var scorePart = UnityEngine.Object.Instantiate(Configs.BallVisual.ScorePartPrefab, UIContainer.VfxCanvas);
+        (scorePart.transform as RectTransform).position = CameraContainer.OrthographicCamera.WorldToScreenPoint(averagePosition);
         scorePart.text = score.ToString();
     }
 

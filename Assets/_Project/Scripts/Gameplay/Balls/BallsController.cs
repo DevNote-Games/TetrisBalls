@@ -14,8 +14,8 @@ public class BallsController
 
 
 
-    public delegate void OnBallChainHandled(List<Ball> balls);
-    public event OnBallChainHandled onBallChainHandled;
+    public delegate void OnBallChainExploded(List<Ball> balls);
+    public event OnBallChainExploded onBallChainExploded;
 
 
     public List<Ball> AllBalls { get; private set; } = new();
@@ -81,6 +81,8 @@ public class BallsController
 
     private List<BallType> GetRandomBallTypesInsideGroup()
     {
+        //return new List<BallType> { BallType.Green, BallType.Red };
+
         var result = new List<BallType>();
         int typesAmount = Random.Range(0, 2) == 0 ? 2 : 3;
 
@@ -111,22 +113,24 @@ public class BallsController
 
         if (ballsAmount >= Configs.GameRules.MinBallsChainRequire)
         {
-            foreach (var handledBall in _handledChainBalls)
-                handledBall.Explode();
+            var explodingChain = new ExplodingBallChain(new List<Ball>(_handledChainBalls));
+            explodingChain.onExploded += (balls) =>
+            {
+                onBallChainExploded?.Invoke(balls);
 
-            onBallChainHandled?.Invoke(_handledChainBalls);
+                foreach (var ball in balls)
+                    ball.FastExplode();
+            };
         }
 
     }
 
-    private Vector2 GetAveragePoint(List<Vector2> points)
+    public void FastExplodeBallChain(List<Ball> balls)
     {
-        Vector2 sum = Vector2.zero;
-        foreach (Vector2 point in points)
-        {
-            sum += point;
-        }
-        return sum / points.Count;
+        onBallChainExploded?.Invoke(balls);
+
+        foreach (var ball in balls)
+            ball.FastExplode();
     }
 
 
@@ -136,7 +140,7 @@ public class BallsController
         {
             var connectedBall = ball.ConnectedBalls[i];
 
-            if (connectedBall.BallType == ball.BallType && _handledChainBalls.Contains(connectedBall) == false)
+            if (connectedBall.IsMatched(ball) && _handledChainBalls.Contains(connectedBall) == false)
             {
                 _handledChainBalls.Add(ball.ConnectedBalls[i]);
                 HandleChainRecursive(connectedBall);
