@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using R3;
@@ -7,7 +8,11 @@ using Zenject;
 
 public class LevelController : IInitializable, ITickable
 {
+    public event Action onLevelStarted;
+
     public Observable<Unit> OnScoreChanged => _onScoreChanged; private Subject<Unit> _onScoreChanged = new();
+
+
 
     public int CompletedLevel { get; private set; } = 1;
     public int CurrentScore { get; private set; } = 0;
@@ -45,12 +50,15 @@ public class LevelController : IInitializable, ITickable
 
     public void Initialize()
     {
-        StartLevel(1);
+        StartLevel(GameState.Level);
     }
 
     public void StartLevel(int levelNumber)
     {
         _ballsController.DestroyAllBalls();
+
+        if (_currentLevelInstance != null)
+            UnityEngine.Object.Destroy(_currentLevelInstance.gameObject);
 
         CurrentScore = 0;
         RequiredScore = Configs.Levels.GetLevelRequiredScore(levelNumber);
@@ -65,6 +73,9 @@ public class LevelController : IInitializable, ITickable
         _ballsController.RespawnBalls();
 
         _levelFinished = false;
+        onLevelStarted?.Invoke();
+
+        Ads.Interstitial.Show(AdKey.Interstitial);
     }
 
     public void AddBallToLimit(Ball ball)

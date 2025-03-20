@@ -9,8 +9,10 @@ public class BombBooster : MonoBehaviour
     [SerializeField] private float _lifetime = 1.5f;
     [SerializeField] private float _explosionRadius = 1f;
     [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private Collider2D _collider;
     [SerializeField] private GameObject _body;
     [SerializeField] private ParticleSystem _explosionParticles;
+    [SerializeField] private List<MeshRenderer> _meshes;
 
     private ParcticleSystemEvents _explosionParticlesEvents;
 
@@ -21,20 +23,28 @@ public class BombBooster : MonoBehaviour
     private Tween _lifetimeTween;
 
 
-    private void Start()
+    public void SetTransparentMode(bool enabled)
     {
-        _explosionParticles.GetComponent<ParcticleSystemEvents>().onStopped += OnExplosionFinished;
+        foreach (var mesh in _meshes)
+        {
+            if (enabled) Graphics.MakeMaterialTransparent(mesh.material);
+            else Graphics.MakeMateriakOpaque(mesh.material);
+        }
     }
 
 
-    private void OnEnable()
+    public void Activate()
     {
+        _collider.enabled = true;
         _rigidbody.isKinematic = false;
         _body.gameObject.SetActive(true);
+
+        _explosionParticles.GetComponent<ParcticleSystemEvents>().onStopped += OnExplosionFinished;
 
         _lifetimeTween?.Kill();
         _lifetimeTween = DOVirtual.DelayedCall(_lifetime, Explode);
     }
+
 
     private void OnDisable()
     {
@@ -59,10 +69,11 @@ public class BombBooster : MonoBehaviour
         int score = Configs.GameRules.GetScoreForChainExplosion(explodedBalls.Count);
         ScoreCalculator.DistributeScore(score, explodedBalls);
 
-        _ballsController.FastExplodeBallChain(explodedBalls);
+        _ballsController.FastExplodeBallChain(explodedBalls, ExplosionType.Booster);
 
         _body.gameObject.SetActive(false);
         _rigidbody.isKinematic = true;
+        _rigidbody.velocity = Vector2.zero;
         _explosionParticles.Play();
     }
 

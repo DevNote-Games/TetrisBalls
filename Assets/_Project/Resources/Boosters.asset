@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9934c18bbfdb8e4282790d2a4e4f24b, type: 3}
+  m_Name: Boosters
+  m_EditorClassIdentifier: 
+  <BombPrefab>k__BackingField: {fileID: 284257294007476270, guid: f35e869d2bd6bff43ac47252d06baf88, type: 3}
+  <BombGroupPrefab>k__BackingField: {fileID: 8850839839511564428, guid: ab808a59c912bf84b9657eeaf8b425c3, type: 3}
+  <SpawnBombChainBallsRequire>k__BackingField: 9
+  <BombPrice>k__BackingField: 1000

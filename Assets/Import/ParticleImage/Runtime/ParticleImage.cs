@@ -794,7 +794,7 @@ namespace AssetKits.ParticleImage
         }
         
         [SerializeField]
-        private List<Burst> _bursts = new List<Burst>(); 
+        private List<Burst> _bursts = new List<Burst>(); public List<Burst> Bursts => _bursts;
 
         [FormerlySerializedAs("_trailRenderer")] [SerializeField]
         private ParticleTrailRenderer _particleTrailRenderer;

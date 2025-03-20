@@ -1,10 +1,13 @@
+using AssetKits.ParticleImage;
 using UnityEngine;
-using VG2;
 
-
+[CreateAssetMenu(menuName = "Configs/UI", fileName = "UI")]
 public class UIConfig : ScriptableObject
 {
-    
+
+    [field: SerializeField] public ParticleImage CoinsParticlesPrefab { get; private set; }
+
+
 
 
 }

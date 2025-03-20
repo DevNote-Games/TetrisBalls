@@ -13,7 +13,9 @@ public class VictoryScreenView : MonoBehaviour
 
     [SerializeField] private RectTransform _rewards;
     [SerializeField] private RectTransform _buttons;
+    [SerializeField] private GameObject _adButton;
 
+    public bool UseAdBonus { get; private set; }
 
     private float FILL_LEVEL_PROGRESS_DELAY = 0.5f;
     private float FILL_LEVEL_PROGRESS_DURATION = 2f;
@@ -29,10 +31,13 @@ public class VictoryScreenView : MonoBehaviour
 
     private void Display(int completedLevel)
     {
+        UseAdBonus = false;
+
         int requiredScore = Configs.Levels.GetLevelRequiredScore(completedLevel);
 
         _rewardText.text = Configs.GameRules.LevelCoinsReward.ToString();
 
+        _adButton.SetActive(true);
         _rewards.localScale = Vector3.zero;
         _buttons.localScale = Vector3.zero;
         _levelProgressSlider.value = 0f;
@@ -63,14 +68,15 @@ public class VictoryScreenView : MonoBehaviour
 
         };
             
-
-
-
-
     }
 
 
-
+    public void ShowBonusReward()
+    {
+        UseAdBonus = true;
+        _rewardText.text = Configs.GameRules.LevelCoinsRewardWithAdBonus.ToString();
+        _adButton.SetActive(false);
+    }
 
 
 

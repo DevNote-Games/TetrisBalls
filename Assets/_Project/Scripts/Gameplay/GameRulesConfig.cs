@@ -17,6 +17,8 @@ public class GameRulesConfig : ScriptableObject
     [field: SerializeField] public int TimeToLimitLose { get; private set; }
     [field: SerializeField] public int MinBallsChainRequire { get; private set; }
     [field: SerializeField] public int LevelCoinsReward { get; private set; }
+    [SerializeField] private float _levelCoinsRewardAdMultiplier; 
+    public int LevelCoinsRewardWithAdBonus => (int)(LevelCoinsReward * _levelCoinsRewardAdMultiplier);
 
 
     [SerializeField] private int _baseScoreForOneBallOfChain;

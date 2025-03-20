@@ -8,6 +8,7 @@ namespace VG2
         private const string adsEnabledKey = "adsEnabled";
         private const string coinsKey = "coins";
         private const string levelKey = "level";
+        private const string bombBoostersKey = "bombs";
 
 
         public static void Parse(StartValuesConfig startValuesConfig, Dictionary<string, string> data)
@@ -16,10 +17,12 @@ namespace VG2
                 (data.ContainsKey(adsEnabledKey) ? bool.Parse(data[adsEnabledKey]) : true);
 
             GameState.Coins = new ReactiveProperty<int>
-                (data.ContainsKey(coinsKey) ? 0 : int.Parse(data[coinsKey]));
+                (data.ContainsKey(coinsKey) ? int.Parse(data[coinsKey]) : 0);
 
-            GameState.Level = data.ContainsKey(levelKey) ? 0 : int.Parse(data[levelKey]);
+            GameState.Level = data.ContainsKey(levelKey) ? int.Parse(data[levelKey]) : 1;
 
+            GameState.BombBoosters = new ReactiveProperty<int>
+                (data.ContainsKey(bombBoostersKey) ? int.Parse(data[bombBoostersKey]) : 3);
         }
 
 
@@ -30,6 +33,7 @@ namespace VG2
             data.Add(adsEnabledKey, GameState.AdsEnabled.ToString());
             data.Add(coinsKey, GameState.Coins.ToString());
             data.Add(levelKey, GameState.Level.ToString());
+            data.Add(bombBoostersKey, GameState.BombBoosters.ToString());
 
             return data;
         }

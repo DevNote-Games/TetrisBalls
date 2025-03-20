@@ -8,6 +8,7 @@ public class EffectsController : IDisposable
     private BallsController _ballsController;
     private LevelController _levelController;
     private int _lastDecalRenderPriority = 0;
+    private GameObject _decalsContainer;
 
 
     private const float BLAST_PARTICLE_Z_POSITION = -0.5f;
@@ -20,6 +21,7 @@ public class EffectsController : IDisposable
         _ballsController = ballsController;
         _ballsController.onBallChainExploded += OnBallChainExploded;
         _levelController = levelController;
+        _levelController.onLevelStarted += OnLevelStarted;
     }
 
     public void Dispose()
@@ -27,8 +29,14 @@ public class EffectsController : IDisposable
         _ballsController.onBallChainExploded -= OnBallChainExploded;
     }
 
+    private void OnLevelStarted()
+    {
+        if (_decalsContainer != null)
+            UnityEngine.Object.Destroy(_decalsContainer);
+    }
 
-    private void OnBallChainExploded(List<Ball> balls)
+
+    private void OnBallChainExploded(List<Ball> balls, ExplosionType explosionType)
     {
         Debug.Log(balls.Count);
 
@@ -61,7 +69,11 @@ public class EffectsController : IDisposable
 
     private void SpawnSplashDecal(Vector2 position, Color color)
     {
-        var splashDecal = UnityEngine.Object.Instantiate(Configs.BallVisual.SplashDecalPrefab, position, Quaternion.identity);
+        if (_decalsContainer == null)
+            _decalsContainer = new GameObject("Decals");
+
+        var splashDecal = UnityEngine.Object.Instantiate(Configs.BallVisual.SplashDecalPrefab, _decalsContainer.transform);
+        splashDecal.transform.position = position;
 
         splashDecal.material = new Material(splashDecal.material);
         splashDecal.material.SetFloat("_DrawOrder", _lastDecalRenderPriority);

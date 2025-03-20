@@ -15,6 +15,7 @@ public class Ball : MonoBehaviour
 
     private BallsController _ballsController;
 
+    private const float TRANSPARENT_MODE_ALPHA = 0.5f;
 
     public Color Color { get; private set; }
 
@@ -130,6 +131,13 @@ public class Ball : MonoBehaviour
         Destroy(gameObject);
 
         State = BallState.Exploding;
+    }
+
+
+    public void SetTransparentMode(bool enabled)
+    {
+        if (enabled) Graphics.MakeMaterialTransparent(Material);
+        else Graphics.MakeMateriakOpaque(Material);
     }
 
 

@@ -14,15 +14,14 @@ public class BallsController
 
 
 
-    public delegate void OnBallChainExploded(List<Ball> balls);
+    public delegate void OnBallChainExploded(List<Ball> balls, ExplosionType explosionType);
     public event OnBallChainExploded onBallChainExploded;
 
 
     public List<Ball> AllBalls { get; private set; } = new();
 
-    private List<BallGroup> _spawnedBallGroups = new();
+    private List<SpawnableItem> _spawnedItems = new();
     private List<Vector2> _spawnPositions;
-    private int _ballGroupsLeft;
     private List<Ball> _handledChainBalls = new List<Ball>();
 
 
@@ -37,10 +36,10 @@ public class BallsController
 
 
 
-    public void OnBallGroupReleased()
+    public void OnItemReleased(SpawnableItem item)
     {
-        _ballGroupsLeft--;
-        if (_ballGroupsLeft == 0) RespawnBalls();
+        _spawnedItems.Remove(item);
+        if (_spawnedItems.Count == 0) RespawnBalls();
     }
 
     public void DestroyAllBalls()
@@ -51,12 +50,25 @@ public class BallsController
         AllBalls.Clear();
     }
 
+    public void ReplaceRandomItem(SpawnableItem newItemPrefab)
+    {
+        var newItemInstance = SceneContainer.InstantiatePrefabFromComponent(newItemPrefab);
+
+        int randomIndex = Random.Range(0, _spawnedItems.Count);
+        var replacedItem = _spawnedItems[randomIndex];
+        _spawnedItems[randomIndex] = newItemInstance;
+        newItemInstance.transform.position = replacedItem.transform.position;
+
+        Object.Destroy(replacedItem.gameObject);
+    }
+
+
     public void RespawnBalls()
     {
-        foreach (var ballGroup in _spawnedBallGroups)
-            if (ballGroup != null) Object.Destroy(ballGroup.gameObject);
+        foreach (var item in _spawnedItems)
+            if (item != null) Object.Destroy(item.gameObject);
 
-        _spawnedBallGroups.Clear();
+        _spawnedItems.Clear();
 
         foreach (var spawnPosition in _spawnPositions)
         {
@@ -72,10 +84,8 @@ public class BallsController
                 ball.SetType(ballType);
             }
 
-            _spawnedBallGroups.Add(groupInstance);
+            _spawnedItems.Add(groupInstance);
         }
-
-        _ballGroupsLeft = _spawnPositions.Count;
     }
 
 
@@ -116,7 +126,7 @@ public class BallsController
             var explodingChain = new ExplodingBallChain(new List<Ball>(_handledChainBalls));
             explodingChain.onExploded += (balls) =>
             {
-                onBallChainExploded?.Invoke(balls);
+                onBallChainExploded?.Invoke(balls, ExplosionType.Chain);
 
                 foreach (var ball in balls)
                     ball.FastExplode();
@@ -125,9 +135,9 @@ public class BallsController
 
     }
 
-    public void FastExplodeBallChain(List<Ball> balls)
+    public void FastExplodeBallChain(List<Ball> balls, ExplosionType explosionType)
     {
-        onBallChainExploded?.Invoke(balls);
+        onBallChainExploded?.Invoke(balls, explosionType);
 
         foreach (var ball in balls)
             ball.FastExplode();
