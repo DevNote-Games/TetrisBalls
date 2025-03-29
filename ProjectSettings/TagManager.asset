@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - IgnoreRaycastBlock
   layers:
   - Default
   - TransparentFX
@@ -11,8 +12,8 @@ TagManager:
   - BallTrigger
   - Water
   - UI
-  - Ball
-  - 
+  - Balls
+  - Limiter
   - 
   - 
   - 

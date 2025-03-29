@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 595552070366599243, guid: 1d421b58016546f4eb11b1c184de12af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2152772627618868478, guid: 1d421b58016546f4eb11b1c184de12af, type: 3}
+      propertyPath: _items.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3319233933818875218, guid: 1d421b58016546f4eb11b1c184de12af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -66,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7608952852914822176, guid: 1d421b58016546f4eb11b1c184de12af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7907597823841874810, guid: 1d421b58016546f4eb11b1c184de12af, type: 3}
       propertyPath: _balls.Array.size

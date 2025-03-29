@@ -12,12 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e302513c19e0343950234bdb20f603, type: 3}
   m_Name: Levels
   m_EditorClassIdentifier: 
-  _ballPanelSizePart: 0.2
+  _ballPanelSizePart: 0.23
   _baseScoreRequire: 1000
   _levelPrefabs:
+  - {fileID: 6619597050459864839, guid: 46c02ca1b5c53fc4583207eb28f420a9, type: 3}
+  - {fileID: 6619597050459864839, guid: f07c5948617666a4d8ba652ff7235029, type: 3}
+  - {fileID: 6454288715939351739, guid: 68c5aae19adfec44295dc7aa79b261a7, type: 3}
   - {fileID: 6454288715939351739, guid: 06c1326b5c34afc4d9f0f59e1cd8daaf, type: 3}
   - {fileID: 6454288715939351739, guid: b3c1c1e26f820e24c845403dfddc8dcc, type: 3}
-  - {fileID: 6454288715939351739, guid: 06c1326b5c34afc4d9f0f59e1cd8daaf, type: 3}
-  - {fileID: 6454288715939351739, guid: b3c1c1e26f820e24c845403dfddc8dcc, type: 3}
-  - {fileID: 6454288715939351739, guid: 06c1326b5c34afc4d9f0f59e1cd8daaf, type: 3}
-  - {fileID: 6454288715939351739, guid: b3c1c1e26f820e24c845403dfddc8dcc, type: 3}
+  - {fileID: 6454288715939351739, guid: efcb6abe9414d0342aee3f68bb3130f8, type: 3}
+  - {fileID: 6454288715939351739, guid: 4a05df2ce294eca4f8dd563b9e6934db, type: 3}
+  - {fileID: 6619597050459864839, guid: 736d694662d50944dba85c216172fdb6, type: 3}
+  - {fileID: 6454288715939351739, guid: e08e68612825e2d4b8ebd6f7224c29fc, type: 3}
+  - {fileID: 6454288715939351739, guid: 0d51b17815d0ce644a3990e08c74d674, type: 3}
+  - {fileID: 6619597050459864839, guid: 024e238c5aaf57a46a3bf24884fbe67e, type: 3}
+  - {fileID: 6619597050459864839, guid: cef0b89dda2ad3549b4e2530e8a88c0d, type: 3}
+  - {fileID: 6454288715939351739, guid: 01088a3d546566f47a0aee892c2f772e, type: 3}
+  - {fileID: 6454288715939351739, guid: 84221ff22846c0541ba6fd78a66cd5de, type: 3}
+  - {fileID: 6619597050459864839, guid: 5d0716ba8f22f5e4a8e7f85260fa5a4a, type: 3}

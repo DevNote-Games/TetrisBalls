@@ -6,7 +6,14 @@ public static class Graphics
     private const float TRANSPARENT_ALPHA = 0.6f;
 
 
-    public static void MakeMaterialTransparent(Material material)
+    public static void SetTransparentMode(bool enabled, Material material)
+    {
+        if (enabled) MakeMaterialTransparent(material);
+        else MakeMateriakOpaque(material);
+    }
+
+
+    private static void MakeMaterialTransparent(Material material)
     {
         material.SetFloat("_Surface", 1);
         material.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
@@ -22,7 +29,7 @@ public static class Graphics
         material.SetColor("_BaseColor", baseColor);
     }
 
-    public static void MakeMateriakOpaque(Material material)
+    private static void MakeMateriakOpaque(Material material)
     {
         material.SetFloat("_Surface", 0); // Opaque
         material.SetFloat("_SrcBlend", (float)BlendMode.One);

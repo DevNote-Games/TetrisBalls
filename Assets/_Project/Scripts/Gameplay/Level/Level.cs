@@ -6,6 +6,28 @@ public class Level : MonoBehaviour
     [field: SerializeField] public float ScoreMultiplier { get; private set; } = 1f;
     [SerializeField] private int _ballGroupsAmount = 3;
     [SerializeField] private Rect _cameraArea; public Rect CameraArea => _cameraArea;
+    [field: SerializeField] public List<BallType> BallTypes { get; private set; }
+    [field: SerializeField] public List<ItemGroup> BallGroupPrefabs { get; private set; }
+
+
+    private Rect? _mainFieldRect;
+    public Rect MainFieldRect
+    {
+        get
+        {
+            if (_mainFieldRect == null) UpdateMainFieldRect();
+            return _mainFieldRect.Value;
+        }
+    }
+
+    private void UpdateMainFieldRect()
+    {
+        var mainFieldRect = new Rect(_cameraArea);
+        mainFieldRect.center += Vector2.up * _cameraArea.height * Configs.Levels.BallPanelSizePart / 2f;
+        mainFieldRect.height *= (1f - Configs.Levels.BallPanelSizePart);
+        mainFieldRect.position -= mainFieldRect.size / 2f;
+        _mainFieldRect = mainFieldRect;
+    }
 
 
 
@@ -38,12 +60,17 @@ public class Level : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        UpdateMainFieldRect();
+
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(_cameraArea.position, _cameraArea.size);
 
         Gizmos.color = Color.cyan;
         Rect ballPanelRect = GetBallPanelRect();
         Gizmos.DrawWireCube(ballPanelRect.position, ballPanelRect.size);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(MainFieldRect.center, MainFieldRect.size);
 
         foreach (var ballGroupPosition in GetBallGroupSpawnPositions())
             Gizmos.DrawWireSphere(ballGroupPosition, 0.25f);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BallSpawn
   m_EditorClassIdentifier: 
   <BallGroupPrefabs>k__BackingField:
-  - {fileID: 7907597823841874810, guid: 1d421b58016546f4eb11b1c184de12af, type: 3}
-  - {fileID: 4889249462193427281, guid: 96ab50d19e30a5243b6a2104c1b6c430, type: 3}
-  - {fileID: 4889249462193427281, guid: a656fb271a4fa9c4eb44fb28842ec0f2, type: 3}
+  - {fileID: 2152772627618868478, guid: 1d421b58016546f4eb11b1c184de12af, type: 3}
+  - {fileID: 3713036906462186709, guid: 96ab50d19e30a5243b6a2104c1b6c430, type: 3}
+  - {fileID: 3713036906462186709, guid: a656fb271a4fa9c4eb44fb28842ec0f2, type: 3}
   <SpawnableBallTypes>k__BackingField: 00000000010000000200000003000000

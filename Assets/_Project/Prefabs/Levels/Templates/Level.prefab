@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 3221665296853694595}
   - component: {fileID: 892240117960635714}
   - component: {fileID: 8389473751982433539}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LimitTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

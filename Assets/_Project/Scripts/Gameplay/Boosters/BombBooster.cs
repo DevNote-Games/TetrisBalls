@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public class BombBooster : MonoBehaviour
+public class BombBooster : Item
 {
 
     [SerializeField] private float _lifetime = 1.5f;
@@ -23,17 +23,8 @@ public class BombBooster : MonoBehaviour
     private Tween _lifetimeTween;
 
 
-    public void SetTransparentMode(bool enabled)
-    {
-        foreach (var mesh in _meshes)
-        {
-            if (enabled) Graphics.MakeMaterialTransparent(mesh.material);
-            else Graphics.MakeMateriakOpaque(mesh.material);
-        }
-    }
 
-
-    public void Activate()
+    public override void Activate()
     {
         _collider.enabled = true;
         _rigidbody.isKinematic = false;
@@ -62,6 +53,7 @@ public class BombBooster : MonoBehaviour
     {
         var explodedBalls = new List<Ball>();
 
+       
         foreach (var ball in _ballsController.AllBalls)
             if (ball.State == BallState.Active && Vector2.Distance(transform.position, ball.transform.position) < _explosionRadius)
                 explodedBalls.Add(ball);
@@ -78,13 +70,15 @@ public class BombBooster : MonoBehaviour
     }
 
 
-    private void OnDrawGizmosSelected()
+    protected override void OnDrawGizmosSelected()
     {
+        base.OnDrawGizmosSelected();
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _explosionRadius);
     }
 
-
-
-
+    public override void SetAvailableForPlacing(bool available)
+    {
+        _meshes.ForEach(mesh => Graphics.SetTransparentMode(enabled: !available, mesh.material));
+    }
 }

@@ -128,10 +128,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e48686b6b50e946bf311b9303a7a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Radius>k__BackingField: 0.3
+  _activateOnStart: 0
   _meshRenderer: {fileID: 7000986888871700399}
   _rigidbody: {fileID: 519669250562418429}
   _collider: {fileID: 8307479266213710706}
   _ballTrigger: {fileID: 513554321671728061}
+  <BallType>k__BackingField: 0
 --- !u!114 &2896727017507080977
 MonoBehaviour:
   m_ObjectHideFlags: 0

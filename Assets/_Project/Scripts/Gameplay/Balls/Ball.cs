@@ -4,11 +4,12 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public class Ball : MonoBehaviour
+public class Ball : Item
 {
     public event Action<Ball> onExploded;
 
-    [SerializeField] private MeshRenderer _meshRenderer; 
+    [SerializeField] private bool _activateOnStart;
+    [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private BallTrigger _ballTrigger;
@@ -31,7 +32,7 @@ public class Ball : MonoBehaviour
 
     public List<Ball> ConnectedBalls { get; private set; } = new();
 
-    public BallType BallType { get; private set; }
+    [field: SerializeField] public BallType BallType { get; private set; }
 
 
 
@@ -44,10 +45,20 @@ public class Ball : MonoBehaviour
 
     private void OnEnable()
     {
+        State = BallState.Inventory;
+        TogglePhysics(false);
+
         _ballTrigger.onBallEnter += OnBallEnter;
         _ballTrigger.onBallExit += OnBallExit;
 
         _ballsController?.AllBalls.Add(this);
+
+        if (_activateOnStart)
+        {
+            SetType(BallType);
+            Activate();
+            _rigidbody.isKinematic = true;
+        }
     }
 
     private void OnDisable()
@@ -134,11 +145,19 @@ public class Ball : MonoBehaviour
     }
 
 
-    public void SetTransparentMode(bool enabled)
+    public override void SetAvailableForPlacing(bool available) 
+        => Graphics.SetTransparentMode(!available, Material);
+
+
+    public override void Activate()
     {
-        if (enabled) Graphics.MakeMaterialTransparent(Material);
-        else Graphics.MakeMateriakOpaque(Material);
+        State = BallState.Active;
+        TogglePhysics(true);
+        Graphics.SetTransparentMode(false, Material);
     }
 
-
+    private void OnValidate()
+    {
+        _meshRenderer.material = Configs.BallVisual.GetBallMaterial(BallType);
+    }
 }

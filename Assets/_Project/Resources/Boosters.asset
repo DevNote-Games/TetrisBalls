@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Boosters
   m_EditorClassIdentifier: 
   <BombPrefab>k__BackingField: {fileID: 284257294007476270, guid: f35e869d2bd6bff43ac47252d06baf88, type: 3}
-  <BombGroupPrefab>k__BackingField: {fileID: 8850839839511564428, guid: ab808a59c912bf84b9657eeaf8b425c3, type: 3}
-  <SpawnBombChainBallsRequire>k__BackingField: 9
+  <BombGroupPrefab>k__BackingField: {fileID: 2821279533655866920, guid: ab808a59c912bf84b9657eeaf8b425c3, type: 3}
+  <SpawnBombChainBallsRequire>k__BackingField: 10
   <BombPrice>k__BackingField: 1000

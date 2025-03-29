@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7191170603495861035}
-  - component: {fileID: 8850839839511564428}
+  - component: {fileID: 2821279533655866920}
   m_Layer: 0
   m_Name: BoosterGroup
   m_TagString: Untagged
@@ -125,7 +125,7 @@ Transform:
   - {fileID: 5104432489881863404}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8850839839511564428
+--- !u!114 &2821279533655866920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,11 +134,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7247492001053443451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a33d0f2026bcdd4c80f39802b233116, type: 3}
+  m_Script: {fileID: 11500000, guid: 412c13a36ba906f409b3119d5041fc7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _booster: {fileID: 5863547369667183767}
   _interactionHandler: {fileID: 3193778566801419524}
+  _items:
+  - {fileID: 5863547369667183767}
 --- !u!1 &8726214357896469824
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6245283, g: 1, b: 0.9541099, a: 0.36862746}
+  m_Color: {r: 0.6245283, g: 1, b: 0.9541099, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

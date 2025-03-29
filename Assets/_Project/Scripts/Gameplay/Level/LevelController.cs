@@ -21,7 +21,7 @@ public class LevelController : IInitializable, ITickable
     private BallsController _ballsController;
     private UIController _uiController;
 
-    private Level _currentLevelInstance;
+    private Level _currentLevelInstance; public Level CurrentLevel => _currentLevelInstance;
     private Dictionary<Ball, float> _ballsTimesInsideLimit = new();
     private bool _levelFinished;
     
@@ -69,8 +69,7 @@ public class LevelController : IInitializable, ITickable
         _currentLevelInstance = SceneContainer.InstantiatePrefabFromComponent(Configs.Levels.GetLevelPrefab(levelNumber));
 
         CameraContainer.AdjustCamerasToRect(_currentLevelInstance.CameraArea);
-        _ballsController.SetBallsSpawnPositions(_currentLevelInstance.GetBallGroupSpawnPositions());
-        _ballsController.RespawnBalls();
+        _ballsController.RespawnBalls(_currentLevelInstance);
 
         _levelFinished = false;
         onLevelStarted?.Invoke();

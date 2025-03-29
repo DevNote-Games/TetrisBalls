@@ -9777,7 +9777,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 1
+  moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
   randomSeed: 0
@@ -24167,12 +24167,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9611b6017386e4586167eff1d1f444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Radius>k__BackingField: 0.3
   _lifetime: 1.5
   _explosionRadius: 1.3
   _rigidbody: {fileID: 519669250562418429}
-  _collider: {fileID: 0}
+  _collider: {fileID: 8307479266213710706}
   _body: {fileID: 6157504304931958066}
   _explosionParticles: {fileID: 8800818245486894989}
+  _meshes: []
 --- !u!50 &519669250562418429
 Rigidbody2D:
   serializedVersion: 4
