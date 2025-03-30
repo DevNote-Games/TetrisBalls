@@ -15,12 +15,23 @@ public class LevelsConfig : ScriptableObject
 
     [SerializeField] [Range(0, 1)] private float _ballPanelSizePart; public float BallPanelSizePart => _ballPanelSizePart;
     [SerializeField] private float _baseScoreRequire;
+    [SerializeField] private int _repeatFromLevel;
 
     [SerializeField] private List<Level> _levelPrefabs;
 
     public int GetLevelRequiredScore(int levelNumber) => (int)(_levelPrefabs[levelNumber - 1].ScoreMultiplier * _baseScoreRequire);
 
 
-    public Level GetLevelPrefab(int levelNumber) => _levelPrefabs[levelNumber - 1];
+    public Level GetLevelPrefab(int levelNumber)
+    {
+        if (levelNumber < _levelPrefabs.Count)
+            return _levelPrefabs[levelNumber];
+
+        else
+        {
+            int index = (levelNumber - _levelPrefabs.Count) % (_levelPrefabs.Count - 5) + 5;
+            return _levelPrefabs[index];
+        }
+    }
 
 }
