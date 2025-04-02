@@ -16,3 +16,4 @@ MonoBehaviour:
   <BombGroupPrefab>k__BackingField: {fileID: 2821279533655866920, guid: ab808a59c912bf84b9657eeaf8b425c3, type: 3}
   <SpawnBombChainBallsRequire>k__BackingField: 10
   <BombPrice>k__BackingField: 1000
+  <BombAvailableFromLevel>k__BackingField: 3

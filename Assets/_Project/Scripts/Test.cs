@@ -1,26 +1,30 @@
 using UnityEngine;
 using VG2;
+using Zenject;
 
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] private GameObject _bombPrefab;
+    [Inject] private LevelController _levelController;
 
 
 
     private void Start()
     {
-        //CombineAllMeshes();
+        if (!Environment.editor) gameObject.SetActive(false);
     }
 
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            SceneContainer.InstantiatePrefab(_bombPrefab).transform.position = Vector3.zero;
+            _levelController.StartLevel(GameState.Level.Value - 1);
         }
-
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            _levelController.StartLevel(GameState.Level.Value + 1);
+        }
 
         
     }

@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using VG2;
 using Zenject;
 
 public class ItemGroup : MonoBehaviour
 {
     public event Action<List<Item>> onItemsReleased;
+    public event Action onTaked;
+    public event Action onCanceled;
 
     [SerializeField] private InteractionHandler _interactionHandler;
     [SerializeField] private List<Item> _items; public List<Item> Items => _items;
@@ -24,15 +27,24 @@ public class ItemGroup : MonoBehaviour
 
     private void OnEnable()
     {
+        _interactionHandler.onBeginDrag += OnBeginDrag;
         _interactionHandler.onDrag += OnDrag;
         _interactionHandler.onEndDrag += OnEndDrag;
     }
 
     private void OnDisable()
     {
+        _interactionHandler.onBeginDrag -= OnBeginDrag;
         _interactionHandler.onDrag -= OnDrag;
         _interactionHandler.onEndDrag -= OnEndDrag;
     }
+
+    private void OnBeginDrag(Vector2 position)
+    {
+        Sound.Play(SoundKey.TakeBall);
+        onTaked?.Invoke();
+    }
+
 
     private void OnDrag(Vector2 position)
     {
@@ -60,6 +72,7 @@ public class ItemGroup : MonoBehaviour
     {
         if (GroupIsAvailableForPlacing())
         {
+            Sound.Play(SoundKey.ReleaseBall);
             transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
 
             foreach (var item in _items)
@@ -78,6 +91,7 @@ public class ItemGroup : MonoBehaviour
         {
             transform.position = _originPosition;
             _items.ForEach(item => item.SetAvailableForPlacing(true));
+            onCanceled?.Invoke();
         }      
     }
 

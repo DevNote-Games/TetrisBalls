@@ -71,7 +71,7 @@ namespace VG2
 
         public static AudioSource Play(string soundKey)
         {
-            var soundUnit = Resources.Load<SoundUnit>($"Sounds/{soundKey}");
+            var soundUnit = Resources.Load<SoundUnit>($"{soundKey}");
 
             AudioSource audioSource = soundUnit.channel == Channel.Music ? 
                 instance._musicAudioSource : instance._sfxAudioStack.GetAudioSource();
@@ -88,6 +88,7 @@ namespace VG2
 
             if (soundUnit.playType == SoundUnit.PlayType.OneShot)
                 audioSource.PlayOneShot(soundUnit.audioClip);
+
             else audioSource.Play();
 
             return audioSource;

@@ -1159,10 +1159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47176fd648b92b4e9ce31d45b6644ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _requestDataBeforeStart: 0
+  _requestDataBeforeStart: 1
   _tables:
   - _key: localization_main
-    _webId: 1YJOrSvm4LxN0LXgAzvvVF1RQ-LUns4yN6hbI4onmkNY
+    _webId: 1De0TBtH8z_Cngob5vTBeDmla5dXyswMadE91hOU-Djk
     _gid: 194265088
   _loadables:
   - {fileID: 11400000, guid: 59251e4e0228aa44eb90cba41ce8bef3, type: 2}
@@ -4999,7 +4999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34dbc804fbca3d14582de24c2a12e8ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _counterId: 98208910
+  _counterId: 100734748
 --- !u!1 &7573418342084780940
 GameObject:
   m_ObjectHideFlags: 0
@@ -5068,14 +5068,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cashedClipNames:
-  - can_not_move_item.mp3
+  - bomb.mp3
   - click.mp3
-  - merge_items.mp3
+  - coins_break.mp3
+  - coins_get.mp3
+  - explosion.mp3
+  - fill_progress.mp3
+  - level_up.mp3
+  - lose.mp3
   - music.mp3
-  - place_item.mp3
-  - prize_claw_music.mp3
-  - sell_item.mp3
-  - take_item.mp3
+  - pop_1.mp3
+  - pop_2.mp3
+  - pop_3.mp3
+  - score_completed.mp3
+  - score_fill.mp3
+  - select.mp3
+  - splash_1.mp3
+  - splash_2.mp3
+  - splash_3.mp3
+  - splash_4.mp3
+  - splash_5.mp3
+  - win.mp3
 --- !u!224 &7722235989580311248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5281,7 +5294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8182676289065720550
 RectTransform:
   m_ObjectHideFlags: 0

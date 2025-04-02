@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using R3;
 using UnityEngine;
 using VG2;
@@ -8,8 +9,7 @@ using Zenject;
 
 public class LevelController : IInitializable, ITickable
 {
-    public event Action onLevelStarted;
-
+    public Observable<Unit> OnLevelStarted => _onLevelStarted; private Subject<Unit> _onLevelStarted = new();
     public Observable<Unit> OnScoreChanged => _onScoreChanged; private Subject<Unit> _onScoreChanged = new();
 
 
@@ -50,7 +50,7 @@ public class LevelController : IInitializable, ITickable
 
     public void Initialize()
     {
-        StartLevel(GameState.Level);
+        StartLevel(GameState.Level.Value);
     }
 
     public void StartLevel(int levelNumber)
@@ -64,7 +64,7 @@ public class LevelController : IInitializable, ITickable
         RequiredScore = Configs.Levels.GetLevelRequiredScore(levelNumber);
         _onScoreChanged?.OnNext(Unit.Default);
 
-        GameState.Level = levelNumber;
+        GameState.Level.Value = levelNumber;
 
         _currentLevelInstance = SceneContainer.InstantiatePrefabFromComponent(Configs.Levels.GetLevelPrefab(levelNumber));
 
@@ -72,7 +72,7 @@ public class LevelController : IInitializable, ITickable
         _ballsController.RespawnBalls(_currentLevelInstance);
 
         _levelFinished = false;
-        onLevelStarted?.Invoke();
+        _onLevelStarted.OnNext(Unit.Default);
 
         Ads.Interstitial.Show(AdKey.Interstitial);
     }
@@ -91,12 +91,14 @@ public class LevelController : IInitializable, ITickable
     private void Lose()
     {
         _uiController.ShowLoseScreen();
+        Analytics.SendEvent(EventKey.LevelLose(GameState.Level.Value));
         _levelFinished = true;
     }
 
     private void Win()
     {
-        _uiController.ShowVictoryScreen();
+        DOVirtual.DelayedCall(2f, () => _uiController.ShowVictoryScreen());
+        CompletedLevel = GameState.Level.Value;
         _levelFinished = true;
     }
 

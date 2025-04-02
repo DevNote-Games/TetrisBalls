@@ -85,10 +85,10 @@ MonoBehaviour:
   _fitRect: 0
   _emitOnSurface: 1
   _emitterThickness: 0
-  _loop: 1
+  _loop: 0
   _prewarm: 0
   _duration: 1
-  _playMode: 1
+  _playMode: 0
   _startSize:
     separable: 1
     separated: 0
@@ -1510,7 +1510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1536,10 +1536,10 @@ MonoBehaviour:
   _fitRect: 0
   _emitOnSurface: 1
   _emitterThickness: 0
-  _loop: 1
+  _loop: 0
   _prewarm: 0
-  _duration: 1
-  _playMode: 1
+  _duration: 4
+  _playMode: 0
   _startSize:
     separable: 1
     separated: 0
@@ -1691,7 +1691,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_ConstantMin: 0
-    m_ConstantMax: 1
+    m_ConstantMax: 4
   _startSpeed:
     m_Mode: 3
     m_CurveMultiplier: 0

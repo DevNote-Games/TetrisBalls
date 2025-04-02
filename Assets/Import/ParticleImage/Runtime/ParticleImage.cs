@@ -2057,7 +2057,8 @@ namespace AssetKits.ParticleImage
 
                 mesh.RecalculateBounds();
                 canvasRenderer.SetMesh(mesh);
-                
+
+
                 if (trailsEnabled)
                 {
                     particleTrailRenderer.SetMeshData();

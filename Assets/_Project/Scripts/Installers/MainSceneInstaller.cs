@@ -16,17 +16,17 @@ public class MainSceneInstaller : MonoInstaller
 
         var ui = new UIController();
         var balls = new BallsController();
-        var level = new LevelController(balls, ui);
-        var effects = new EffectsController(balls, level);
         var chainBoosters = new ChainBoostersController(balls);
-
+        var level = new LevelController(balls, ui);
+        var sound = new SoundController(level);
+        var effects = new EffectsController(balls, level, sound);
 
         Container.BindInterfacesAndSelfTo<LevelController>().FromInstance(level).AsSingle();
         Container.BindInterfacesAndSelfTo<BallsController>().FromInstance(balls).AsSingle();
         Container.BindInterfacesAndSelfTo<EffectsController>().FromInstance(effects).AsSingle();
         Container.BindInterfacesAndSelfTo<UIController>().FromInstance(ui).AsSingle();
         Container.BindInterfacesAndSelfTo<ChainBoostersController>().FromInstance(chainBoosters).AsSingle();
-
+        Container.BindInterfacesAndSelfTo<SoundController>().FromInstance(sound).AsSingle();
 
     }
 

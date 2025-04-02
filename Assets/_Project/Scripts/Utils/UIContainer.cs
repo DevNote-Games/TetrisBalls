@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using AssetKits.ParticleImage;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class UIContainer : MonoBehaviour, IInitializable
@@ -12,6 +15,8 @@ public class UIContainer : MonoBehaviour, IInitializable
     [SerializeField] private VictoryScreenView _victoryScreen; public static VictoryScreenView VictoryScreen => _instance._victoryScreen;
     [SerializeField] private LoseScreenView _loseScreen; public static LoseScreenView LoseScreen => _instance._loseScreen;
     [SerializeField] private CoinsView _coins; public static CoinsView Coins => _instance._coins;
+    [SerializeField] private List<ParticleImage> _winParticles; public static List<ParticleImage> WinParticles => _instance._winParticles;
+    [SerializeField] private UseBombButtonView _bombBoosterButton; public static UseBombButtonView BombBoosterButton => _instance._bombBoosterButton;
 
 
 

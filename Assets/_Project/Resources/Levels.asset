@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballPanelSizePart: 0.23
   _baseScoreRequire: 1000
-  _repeatFromLevel: 0
+  _repeatFromLevelIndex: 2
   _levelPrefabs:
   - {fileID: 6454288715939351739, guid: 06c1326b5c34afc4d9f0f59e1cd8daaf, type: 3}
   - {fileID: 6454288715939351739, guid: b3c1c1e26f820e24c845403dfddc8dcc, type: 3}

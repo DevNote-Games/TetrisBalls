@@ -9,6 +9,7 @@ public class BoostersConfig : ScriptableObject
     [field: SerializeField] public ItemGroup BombGroupPrefab { get; private set; }
     [field: SerializeField] public int SpawnBombChainBallsRequire { get; private set; }
     [field: SerializeField] public int BombPrice { get; private set; }
+    [field: SerializeField] public int BombAvailableFromLevel { get; private set; }
 
 
 

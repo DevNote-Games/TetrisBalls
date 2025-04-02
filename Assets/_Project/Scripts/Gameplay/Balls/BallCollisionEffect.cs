@@ -1,10 +1,14 @@
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 public class BallCollisionEffect : MonoBehaviour
 {
     [SerializeField] private Ball _ball;
     [SerializeField] private BallTrigger _ballTrigger;
+
+    [Inject] private SoundController _soundController;
+
 
     private bool _isPlaying;
     private Sequence _currentSequence;
@@ -31,6 +35,7 @@ public class BallCollisionEffect : MonoBehaviour
         if (_isPlaying) return;
         if (_ball.Velocity.magnitude > VELOCITY_REQUIRE || ball.Velocity.magnitude > VELOCITY_REQUIRE)
         {
+            _soundController.PlayBallCollision();
             _currentSequence?.Kill();
             _currentSequence = DOTween.Sequence()
                 .AppendCallback(() => _isPlaying = true)

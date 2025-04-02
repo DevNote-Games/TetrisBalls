@@ -51,13 +51,13 @@ public class UseBombButtonView : ReactiveView
         if (GameState.BombBoosters.Value > 0)
         {
             GameState.BombBoosters.Value--;
-            _ballsController.ReplaceRandomItem(Configs.Boosters.BombGroupPrefab);
+            ApplyBooster();
         }
 
         else if (GameState.Coins.Value >= Configs.Boosters.BombPrice)
         {
             GameState.Coins.Value -= Configs.Boosters.BombPrice;
-            _ballsController.ReplaceRandomItem(Configs.Boosters.BombGroupPrefab);
+            ApplyBooster();
         }
 
         else
@@ -71,6 +71,12 @@ public class UseBombButtonView : ReactiveView
     }
 
     
+    private void ApplyBooster()
+    {
+        Analytics.SendEvent(EventKey.BombUsed);
+        _ballsController.ReplaceRandomItem(Configs.Boosters.BombGroupPrefab);
+    }
+
 
 
 }

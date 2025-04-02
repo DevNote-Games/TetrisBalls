@@ -10,7 +10,7 @@ public class RestartLevelButton : ButtonHandler
     protected override void OnClick()
     {
         _uiController.HideCurrentView();
-        _levelController.StartLevel(1);
+        _levelController.StartLevel(GameState.Level.Value);
     }
 
 }

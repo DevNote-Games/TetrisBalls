@@ -15,6 +15,7 @@ public class Ball : Item
     [SerializeField] private BallTrigger _ballTrigger;
 
     private BallsController _ballsController;
+    private SoundController _soundController;
 
     private const float TRANSPARENT_MODE_ALPHA = 0.5f;
 
@@ -36,9 +37,10 @@ public class Ball : Item
 
 
 
-    [Inject] private void Construct(BallsController ballsController)
+    [Inject] private void Construct(BallsController ballsController, SoundController soundController)
     {
         _ballsController = ballsController;
+        _soundController = soundController;
         _ballsController.AllBalls.Add(this);
     }
 
@@ -125,6 +127,7 @@ public class Ball : Item
             foreach (var connectedBall in ConnectedBalls)
                 connectedBall.ConnectedBalls.Remove(this);
 
+            _soundController.PlayBallExplosion();
             Destroy(gameObject);
         };
 
@@ -139,6 +142,8 @@ public class Ball : Item
             connectedBall.ConnectedBalls.Remove(this);
 
         onExploded?.Invoke(this);
+
+        _soundController.PlayBallExplosion();
         Destroy(gameObject);
 
         State = BallState.Exploding;

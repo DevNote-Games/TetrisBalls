@@ -20,7 +20,7 @@ public class RunNextLevelButton : ButtonHandler
 
         else if (_buttonType == ButtonType.AdBonus)
         {
-            Ads.Rewarded.Show(AdKey.BonusLevelReward, onShown: (result) =>
+            Ads.Rewarded.Show(AdKey.BonusLevelReward, resetCooldown: true, onShown: (result) =>
             {
                 if (result == Ads.Rewarded.Result.Success)
                     _victoryScreen.ShowBonusReward();
@@ -33,7 +33,9 @@ public class RunNextLevelButton : ButtonHandler
         int reward = _victoryScreen.UseAdBonus ? Configs.GameRules.LevelCoinsRewardWithAdBonus : Configs.GameRules.LevelCoinsReward;
         GameState.Coins.Value += reward;
 
-        _levelController.StartLevel(GameState.Level + 1);
+        _levelController.StartLevel(GameState.Level.Value + 1);
+        Analytics.SendEvent(EventKey.LevelCompleted(_levelController.CompletedLevel));
+
         _uiController.HideCurrentView();
         _uiController.RunCoinsParticles(reward);
     }

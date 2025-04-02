@@ -1,33 +1,56 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using R3;
+using VG2;
+using UnityEngine.Rendering.Universal;
 
 
 public class EffectsController : IDisposable
 {
+    private SoundController _soundController;
     private BallsController _ballsController;
     private LevelController _levelController;
     private int _lastDecalRenderPriority = 0;
     private GameObject _decalsContainer;
 
+    private Queue<DecalProjector> _decalProjectors = new();
+
+
 
     private const float BLAST_PARTICLE_Z_POSITION = -0.5f;
     private const float SMALL_BALLS_PARTICLE_ALPHA = 0.7f;
+    private const int MAX_DECALS = 50;
 
 
-
-    public EffectsController(BallsController ballsController, LevelController levelController)
+    public EffectsController(BallsController ballsController, LevelController levelController, SoundController soundController)
     {
+        levelController.OnScoreChanged.Subscribe(_ => OnScoreChanged());
+        _soundController = soundController;
         _ballsController = ballsController;
         _ballsController.onBallChainExploded += OnBallChainExploded;
         _levelController = levelController;
-        _levelController.onLevelStarted += OnLevelStarted;
+        _levelController.OnLevelStarted.Subscribe(_ => OnLevelStarted());
+    }
+
+    private void OnScoreChanged()
+    {
+        if (_levelController.CurrentScore == _levelController.RequiredScore)
+            RunWinParticles();
     }
 
     public void Dispose()
     {
         _ballsController.onBallChainExploded -= OnBallChainExploded;
     }
+
+    private void RunWinParticles()
+    {
+        Sound.Play(SoundKey.ScoreCompleted);
+        foreach (var particle in UIContainer.WinParticles)
+            particle.Play();
+    }
+
 
     private void OnLevelStarted()
     {
@@ -69,6 +92,15 @@ public class EffectsController : IDisposable
 
     private void SpawnSplashDecal(Vector2 position, Color color)
     {
+        if (_decalProjectors.Count >= MAX_DECALS)
+        {
+            var decal = _decalProjectors.Dequeue();
+            if (decal != null)
+                UnityEngine.Object.Destroy(decal.gameObject);
+        }    
+            
+
+
         if (_decalsContainer == null)
             _decalsContainer = new GameObject("Decals");
 
@@ -85,6 +117,8 @@ public class EffectsController : IDisposable
         splashDecal.transform.rotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f));
 
         splashDecal.material.SetTexture("Base_Map", Configs.BallVisual.GetRandomSplashTexture());
+
+        _decalProjectors.Enqueue(splashDecal);
     }
 
     private void SpawnBlastParticle(Vector2 position, Color color)
@@ -107,6 +141,8 @@ public class EffectsController : IDisposable
         particle.startColor = color;
 
         int score = ball.ScoreForBall;
+
+        particle.onFirstParticleFinished.AddListener(() => _soundController.PlayScoreFill());
 
         particle.onAnyParticleFinished.AddListener(() => _levelController.AddScore(score));
 

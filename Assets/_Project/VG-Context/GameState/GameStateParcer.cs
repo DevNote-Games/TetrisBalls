@@ -19,7 +19,8 @@ namespace VG2
             GameState.Coins = new ReactiveProperty<int>
                 (data.ContainsKey(coinsKey) ? int.Parse(data[coinsKey]) : 0);
 
-            GameState.Level = data.ContainsKey(levelKey) ? int.Parse(data[levelKey]) : 1;
+            GameState.Level = new ReactiveProperty<int>(
+                data.ContainsKey(levelKey) ? int.Parse(data[levelKey]) : 1);
 
             GameState.BombBoosters = new ReactiveProperty<int>
                 (data.ContainsKey(bombBoostersKey) ? int.Parse(data[bombBoostersKey]) : 3);

@@ -10,6 +10,7 @@ public class UIController
 
     public void ShowVictoryScreen()
     {
+        Sound.Play(SoundKey.Win);
         UIContainer.VictoryScreen.gameObject.SetActive(true);
         _currentView = UIContainer.VictoryScreen.gameObject;
     }
@@ -17,6 +18,7 @@ public class UIController
 
     public void ShowLoseScreen()
     {
+        Sound.Play(SoundKey.Lose);
         UIContainer.LoseScreen.gameObject.SetActive(true);
         _currentView = UIContainer.LoseScreen.gameObject;
     }
@@ -27,10 +29,17 @@ public class UIController
 
         _coinsValue = coinsValue;
 
+        Sound.Play(SoundKey.CoinsShow);
         _coinsParticles = Object.Instantiate(Configs.UI.CoinsParticlesPrefab, UIContainer.VfxCanvas);
         _coinsParticles.attractorTarget = UIContainer.Coins.transform;
         _coinsParticles.onAnyParticleFinished.AddListener(OnCoinParticleFinished);
         _coinsParticles.onLastParticleFinished.AddListener(OnCoinLastParticleFinished);
+        _coinsParticles.onFirstParticleFinished.AddListener(OnCoinFirstParticleFinished);
+    }
+
+    private void OnCoinFirstParticleFinished()
+    {
+        Sound.Play(SoundKey.CoinsGet);
     }
 
     private void OnCoinParticleFinished()

@@ -33,8 +33,6 @@ namespace VG2
                     message += "\n" + parameter.Key + ": " + parameter.Value.ToString();
             }
 
-            
-
             instance.Log(message);
         }
 

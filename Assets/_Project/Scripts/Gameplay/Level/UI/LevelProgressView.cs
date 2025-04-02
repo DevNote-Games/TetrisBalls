@@ -9,6 +9,7 @@ using DG.Tweening;
 
 public class LevelProgressView : ReactiveView
 {
+    [SerializeField] private TextMeshProUGUI _levelNubmerText;
     [SerializeField] private TextMeshProUGUI _valueText;
     [SerializeField] private Slider _slider;
 
@@ -25,12 +26,14 @@ public class LevelProgressView : ReactiveView
 
     protected override void Subscribe()
     {
+        disposables.Add(_levelController.OnLevelStarted.Subscribe(_ => Display()));
         disposables.Add(_levelController.OnScoreChanged.Subscribe(_ => Display()));
     }
 
 
     protected override void Display()
     {
+        _levelNubmerText.text = GameState.Level.ToString();
         _valueText.text = $"{_levelController.CurrentScore}/{_levelController.RequiredScore}";
         _slider.value = (float)_levelController.CurrentScore / _levelController.RequiredScore;
 

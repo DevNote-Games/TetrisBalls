@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using VG2;
 using Zenject;
 
 public class BombBooster : Item
@@ -67,6 +68,7 @@ public class BombBooster : Item
         _rigidbody.isKinematic = true;
         _rigidbody.velocity = Vector2.zero;
         _explosionParticles.Play();
+        Sound.Play(SoundKey.Bomb);
     }
 
 

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using VG2;
 
 public class BallsController
@@ -12,10 +14,12 @@ public class BallsController
     }
 
 
-
+    public delegate void OnItemGroupReplaced(ItemGroup newItemGroup);
+    public event OnItemGroupReplaced onItemGroupReplaced;
 
     public delegate void OnBallChainExploded(List<Ball> balls, ExplosionType explosionType);
     public event OnBallChainExploded onBallChainExploded;
+    
 
 
     public List<Ball> AllBalls { get; private set; } = new();
@@ -38,7 +42,7 @@ public class BallsController
     public void DestroyAllBalls()
     {
         foreach (var ball in AllBalls.ToList())
-            Object.Destroy(ball.gameObject);
+            UnityEngine.Object.Destroy(ball.gameObject);
             
         AllBalls.Clear();
     }
@@ -47,12 +51,14 @@ public class BallsController
     {
         var newItemInstance = SceneContainer.InstantiatePrefabFromComponent(newItemGroupPrefab);
 
-        int randomIndex = Random.Range(0, _spawnedItemGroups.Count);
+        int randomIndex = UnityEngine.Random.Range(0, _spawnedItemGroups.Count);
         var replacedItem = _spawnedItemGroups[randomIndex];
         _spawnedItemGroups[randomIndex] = newItemInstance;
         newItemInstance.transform.position = replacedItem.transform.position;
+        newItemInstance.SetOriginPosition(replacedItem.transform.position);
 
-        Object.Destroy(replacedItem.gameObject);
+        UnityEngine.Object.Destroy(replacedItem.gameObject);
+        onItemGroupReplaced?.Invoke(newItemInstance);
     }
 
 
@@ -61,14 +67,14 @@ public class BallsController
         _currentLevel = currentLevel;
 
         foreach (var item in _spawnedItemGroups)
-            if (item != null) Object.Destroy(item.gameObject);
+            if (item != null) UnityEngine.Object.Destroy(item.gameObject);
 
         _spawnedItemGroups.Clear();
 
         foreach (var spawnPosition in currentLevel.GetBallGroupSpawnPositions())
         {
             var ballGroups = _currentLevel.BallGroupPrefabs;
-            var randomBallGroupPrefab = ballGroups[Random.Range(0, ballGroups.Count)];
+            var randomBallGroupPrefab = ballGroups[UnityEngine.Random.Range(0, ballGroups.Count)];
 
             var groupInstance = SceneContainer.InstantiatePrefabFromComponent(randomBallGroupPrefab, spawnPosition, Quaternion.identity);
             groupInstance.SetOriginPosition(spawnPosition);
@@ -77,7 +83,7 @@ public class BallsController
             foreach (var item in groupInstance.Items)
             {
                 var ball = item as Ball;
-                var ballType = ballTypes[Random.Range(0, ballTypes.Count)];
+                var ballType = ballTypes[UnityEngine.Random.Range(0, ballTypes.Count)];
                 ball.SetType(ballType);
             }
 
@@ -88,17 +94,15 @@ public class BallsController
 
     private List<BallType> GetRandomBallTypesInsideGroup()
     {
-        //return new List<BallType> { BallType.Green, BallType.Red };
-
         if (_currentLevel.BallTypes.Count <= 2)
             return _currentLevel.BallTypes;
 
         var result = new List<BallType>();
-        int typesAmount = Random.Range(0, 2) == 0 ? 2 : 3;
+        int typesAmount = UnityEngine.Random.Range(0, 2) == 0 ? 2 : 3;
 
         for (int i = 0; i < typesAmount; )
         {
-            int index = Random.Range(0, _currentLevel.BallTypes.Count);
+            int index = UnityEngine.Random.Range(0, _currentLevel.BallTypes.Count);
             BallType ballType = _currentLevel.BallTypes[index];
 
             if (result.Contains(ballType) == false)
